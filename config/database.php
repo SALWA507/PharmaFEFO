@@ -2,12 +2,24 @@
 
 class Database
 {
-    public static function connect()
+    private static ?PDO $pdo = null;
+
+    public static function connect(): PDO
     {
-        return new PDO(
-            "mysql:host=localhost;dbname=pharmafefo;charset=utf8",
-            "root",
-            ""
-        );
+        if(self::$pdo === null)
+        {
+            self::$pdo = new PDO(
+                "mysql:host=localhost;dbname=pharmafefo;charset=utf8mb4",
+                "root",
+                ""
+            );
+
+            self::$pdo->setAttribute(
+                PDO::ATTR_ERRMODE,
+                PDO::ERRMODE_EXCEPTION
+            );
+        }
+
+        return self::$pdo;
     }
 }
