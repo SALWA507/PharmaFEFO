@@ -6,18 +6,15 @@ class Database
 
     public static function connect(): PDO
     {
-        if(self::$pdo === null)
-        {
+        if (self::$pdo === null) {
+
             self::$pdo = new PDO(
                 "mysql:host=localhost;dbname=pharmafefo;charset=utf8mb4",
                 "root",
                 ""
             );
 
-            self::$pdo->setAttribute(
-                PDO::ATTR_ERRMODE,
-                PDO::ERRMODE_EXCEPTION
-            );
+            self::$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         }
 
         return self::$pdo;

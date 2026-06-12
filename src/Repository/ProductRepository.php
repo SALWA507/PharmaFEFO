@@ -13,32 +13,17 @@ class ProductRepository
 
     public function findAll(): array
     {
-        $sql = "SELECT * FROM medicaments";
-
-        return $this->pdo
-            ->query($sql)
+        return $this->pdo->query("SELECT * FROM medicaments")
             ->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function create(
-        string $name,
-        string $code,
-        string $description
-    ): bool
+    public function create($name,$code,$description): bool
     {
-        $sql = "
-        INSERT INTO medicaments
-        (name,code,description)
-        VALUES
-        (?,?,?)
-        ";
+        $stmt = $this->pdo->prepare("
+            INSERT INTO medicaments(name,code,description)
+            VALUES (?,?,?)
+        ");
 
-        $stmt = $this->pdo->prepare($sql);
-
-        return $stmt->execute([
-            $name,
-            $code,
-            $description
-        ]);
+        return $stmt->execute([$name,$code,$description]);
     }
 }

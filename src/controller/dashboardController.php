@@ -4,22 +4,15 @@ require_once __DIR__ . '/../Repository/stockBatchRepository.php';
 
 class DashboardController
 {
-   public function index()
-{
-    $repository = new StockBatchRepository();
+    public function index()
+    {
+        $repo = new StockBatchRepository();
+        $lots = $repo->findAll();
 
-    $lots = $repository->findAllFEFO();
+        $total = count($lots);
+        $warning = count(array_filter($lots, fn($l) => $l['status'] == 'WARNING'));
+        $critical = count(array_filter($lots, fn($l) => $l['status'] == 'CRITICAL'));
 
-    $criticalLots = $repository->getCriticalLots();
-    $totalLots = count($lots);
-$warnings = 0;
-$critical = 0;
-
-foreach($lots as $lot){
-    if($lot['status'] == 'WARNING') $warnings++;
-    if($lot['status'] == 'CRITICAL') $critical++;
-}
-
-    require __DIR__ . '/../../templates/dashboard/index.php';
-}
+        require __DIR__ . '/../../templates/dashboard/index.php';
+    }
 }

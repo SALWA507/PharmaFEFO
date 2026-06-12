@@ -11,17 +11,11 @@ class UserRepository
         $this->pdo = Database::connect();
     }
 
-    public function findByEmail(
-        string $email
-    )
+    public function findByEmail(string $email)
     {
-        $sql = "
-        SELECT *
-        FROM users
-        WHERE email = ?
-        ";
-
-        $stmt = $this->pdo->prepare($sql);
+        $stmt = $this->pdo->prepare("
+            SELECT * FROM users WHERE email = ?
+        ");
 
         $stmt->execute([$email]);
 

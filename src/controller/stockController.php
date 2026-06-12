@@ -6,9 +6,8 @@ class StockController
 {
     public function list()
     {
-        $repository = new StockBatchRepository();
-
-        $lots = $repository->findAll();
+        $repo = new StockBatchRepository();
+        $lots = $repo->findAll();
 
         require __DIR__ . '/../../templates/dashboard/index.php';
     }
