@@ -1,28 +1,53 @@
-<?php
-session_start();
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Login PharmaFEFO</title>
+<script src="https://cdn.tailwindcss.com"></script>
+</head>
 
-require_once '../src/Repository/UserRepository.php';
+<body class="bg-gray-100 flex justify-center items-center h-screen">
 
-if($_SERVER['REQUEST_METHOD']=='POST')
-{
-    $repo = new UserRepository();
+<div class="bg-white p-8 rounded-xl shadow-lg w-96">
 
-    $user = $repo->findByEmail($_POST['email']);
+    <h2 class="text-2xl font-bold text-center mb-6 text-blue-600">
+        PharmaFEFO
+    </h2>
 
-    if($user && $_POST['password'] === $user['password'])
-    {
-        $_SESSION['user'] = $user;
+    <?php if(!empty($error)): ?>
+        <div class="bg-red-100 text-red-700 p-3 rounded mb-4">
+            <?= $error ?>
+        </div>
+    <?php endif; ?>
 
-        header('Location: index.php');
-        exit;
-    }
+    <form method="POST">
 
-    $error = "Email ou mot de passe incorrect";
-}
-?>
+        <input
+            type="email"
+            name="email"
+            placeholder="Email"
+            class="w-full border p-3 rounded mb-4"
+            required
+        >
 
-<form method="POST">
-    <input type="email" name="email" placeholder="Email">
-    <input type="password" name="password" placeholder="Password">
-    <button>Connexion</button>
-</form>
+        <input
+            type="password"
+            name="password"
+            placeholder="Mot de passe"
+            class="w-full border p-3 rounded mb-4"
+            required
+        >
+
+        <button
+            type="submit"
+            class="w-full bg-blue-600 text-white p-3 rounded"
+        >
+            Connexion
+        </button>
+
+    </form>
+
+</div>
+
+</body>
+</html>
